@@ -1,0 +1,69 @@
+﻿.sidebar-menu {
+    width: 300px;
+    background: var(--bg-nav);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+}
+
+.menu-categories h2,
+.special-offers h2 {
+    color: var(--border-gold);
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--border-gold);
+    padding-bottom: var(--spacing-sm);
+}
+
+.menu-categories ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-categories li {
+    margin: var(--spacing-xs) 0;
+}
+
+.menu-categories ::deep a {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    color: var(--text-light);
+    text-decoration: none;
+    background: transparent;
+    border-radius: var(--radius-md);
+    border: 2px solid transparent;
+    transition: var(--transition-normal);
+}
+
+    .menu-categories ::deep a:hover,
+    .menu-categories ::deep a.active {
+        background: var(--bg-accent);
+        border-color: var(--border-gold);
+        box-shadow: var(--shadow-md);
+        transform: translateX(5px);
+    }
+
+.menu-categories ::deep span {
+    font-size: var(--font-size-xl);
+}
+
+.offer-card {
+    background: var(--bg-accent);
+    padding: var(--spacing-xs) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border-gold);
+    color: var(--text-light);
+    font-weight: var(--font-weight-bold);
+    display: flex;
+    align-items: center;
+    min-height: 100px;
+    cursor: pointer;
+    transition: var(--transition-normal);
+}
+
+    .offer-card:hover {
+        background: var(--hover-red);
+    }

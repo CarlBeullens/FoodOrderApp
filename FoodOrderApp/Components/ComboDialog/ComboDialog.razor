@@ -1,0 +1,46 @@
+﻿@using FoodOrderApp.Services
+@using FoodOrderApp.Models
+@inject IMenuService MenuService
+@inject ICartService CartService
+
+<div class="combo-dialog-backdrop @(IsOpen ? "show" : "")" @onclick="HandleClose"></div>
+<div class="combo-dialog @(IsOpen ? "show" : "")">
+    <div class="combo-content" @onclick:stopPropagation="true">
+        <div class="combo-header">
+            <h3>🍔 @ComboDeal.Name</h3>
+            <button class="close-button" @onclick="HandleClose">×</button>
+        </div>
+        <div class="combo-details">
+            @ComboDeal.Description
+            <div class="combo-price">
+                <span class="price">€@ComboDeal.Price</span>
+            </div>
+        </div>
+        <div class="combo-footer">
+            <button class="btn btn-menu" @onclick="AddToCart">Add to Cart</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsOpenChanged { get; set; }
+
+    [Parameter]
+    public required MenuItem ComboDeal { get; set; }
+    
+    private async Task HandleClose()
+    {
+        await IsOpenChanged.InvokeAsync(false);
+    }
+
+    private async Task AddToCart()
+    {
+        CartService.AddToCart(ComboDeal);
+        await HandleClose();
+    }
+}
+ 

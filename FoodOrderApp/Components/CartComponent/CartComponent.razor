@@ -1,0 +1,34 @@
+﻿@using FoodOrderApp.Models
+@using FoodOrderApp.Services
+@inject ICartService CartService
+
+<div class="cart-item p-3 mb-3">
+    <div class="row align-items-center">
+        <div class="col-md-2">
+            <img src="@Item.MenuItem.ImageUrl" alt="@Item.MenuItem.Name" class="img-fluid rounded" />
+        </div>
+        <div class="col-md-4">
+            <h5 class="mb-1">@Item.MenuItem.Name</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="quantity-controls">
+                <button class="btn btn-cart-quantity btn-small" @onclick="() => CartService.DecreaseQuantity(Item.MenuItem)">-</button>
+                <span class="mx-2">@Item.Quantity</span>
+                <button class="btn btn-cart-quantity btn-small" @onclick="() => CartService.IncreaseQuantity(Item.MenuItem)">+</button>
+            </div>
+        </div>
+        <div class="col-md-2 text-end">
+            <p class="mb-0 fw-bold">€@(Item.MenuItem.Price * Item.Quantity)</p>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-delete btn-small" @onclick="() => CartService.RemoveFromCart(Item.MenuItem)">
+                <i class="bi bi-trash"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public required CartItem Item { get; set; }
+}

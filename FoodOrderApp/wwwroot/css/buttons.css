@@ -1,0 +1,109 @@
+﻿/* Base Button Style */
+.btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--radius-md);
+    box-shadow: none !important;
+}
+
+/* Header Button */
+.btn-header {
+    background: var(--bk-gold);
+    color: var(--text-secondary);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.5px;
+}
+
+    .btn-header:hover {
+        background: var(--hover-yellow);
+        transform: translateY(-2px);
+    }
+
+    .btn-header:active {
+        text-transform: none;
+    }
+
+/* Menu Button */
+.btn-menu {
+    background: var(--bg-accent);
+    color: var(--text-light);
+    font-weight: var(--font-weight-bold);
+    border: 2px solid var(--border-gold);
+    padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+    .btn-menu:hover {
+        background: var(--hover-red);
+        color: var(--bk-white);
+    }
+
+/* Cart Button */
+.btn-cart {
+    background: var(--bk-gold);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-bold);
+    padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+    .btn-cart:hover {
+        background: var(--warning);
+    }
+
+    .btn-cart:active {
+        transform: scale(0.98);
+    }
+
+/* Cart Quantity Button */
+.btn-cart-quantity {
+    background: var(--bk-gold);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-bold);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    min-width: 40px;
+}
+
+    .btn-cart-quantity:hover {
+        background: var(--hover-yellow);
+    }
+
+/* Save Button */
+.btn-save {
+    background: var(--active-red);
+    color: var(--text-light);
+}
+
+    .btn-save:hover {
+        background: var(--bk-red);
+        color: var(--text-light);
+    }
+
+/* Update Button */
+.btn-update {
+    background: var(--bk-gold);
+    color: var(--text-primary);
+    font-weight: var(--font-weight-normal);
+}
+
+    .btn-update:hover {
+        background: var(--hover-yellow);
+    }
+
+/* Delete Button */
+.btn-delete {
+    background: var(--active-red);
+    color: var(--text-light);
+}
+
+    .btn-delete:hover {
+        background: var(--bk-red);
+        color: var(--text-light);
+    }
+
+/* Custom Small Button Modifier */
+.btn-small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}

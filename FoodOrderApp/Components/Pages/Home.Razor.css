@@ -1,0 +1,18 @@
+﻿.special-offer-banner {
+    background: var(--bg-accent);
+    color: var(--text-light);
+    border-radius: var(--radius-md);
+}
+
+.featured-badge {
+    position: absolute;
+    top: var(--spacing-xl);
+    right: calc(-1 * var(--spacing-xl));
+    background: var(--bg-accent);
+    color: var(--text-light);
+    padding: var(--spacing-xs) var(--spacing-xl);
+    transform: rotate(45deg);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    z-index: var(--z-tooltip);
+}

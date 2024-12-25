@@ -1,0 +1,61 @@
+﻿@inherits LayoutComponentBase
+@using FoodOrderApp.Services
+@inject ICartService CartService
+@implements IDisposable
+
+<div class="page">
+    <header class="main-header">
+        <div class="brand">
+            <NavLink href="/">
+                <h1>👑 Blazing Burgers</h1>
+            </NavLink>
+        </div>
+        <div class="header-actions">
+            <NavLink href="menu">
+                <button class="btn btn-header">⚙️ Admin</button>
+            </NavLink>
+            <NavLink href="cart">
+                <button class="btn btn-header">🛒 Cart (@CartItemCount)</button>
+            </NavLink>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <NavMenu></NavMenu>
+        <div class="content-area">
+            @Body
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>© 2024 Blazing Burgers</p>
+            <div class="footer-links">
+                <a href="/about">About Us</a>
+                <a href="/contact">Contact</a>
+                <a href="/privacy">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+</div>
+
+@code {
+    private int CartItemCount = 0;
+
+    protected override void OnInitialized()
+    {
+        CartItemCount = CartService.GetCartItemCount();
+        CartService.OnCartChanged += UpdateCartCount;  // Subscribes to cart changes
+    }
+
+    private void UpdateCartCount()
+    {
+        CartItemCount = CartService.GetCartItemCount();
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        CartService.OnCartChanged -= UpdateCartCount;  // Unsubscribes from event
+    }
+}

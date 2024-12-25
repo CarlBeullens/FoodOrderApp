@@ -1,0 +1,29 @@
+﻿@using FoodOrderApp.Models
+@using FoodOrderApp.Services
+@inject ICartService CartService
+
+<div class="col-md-4">
+    <div class="card h-100">
+        <img src="@Item.ImageUrl" class="card-img" alt="@Item.Name" />
+        <div class="card-body">
+            <h5 class="card-title">@Item.Name</h5>
+            <p class="card-text">@Item.Description</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="price-tag">@Item.Price.ToString("C")</span>
+                <button class="btn btn-cart btn-small" @onclick="AddItemToCart">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public required Models.MenuItem Item { get; set; }
+
+    private void AddItemToCart()
+    {
+        CartService.AddToCart(Item);
+    }
+}

@@ -1,0 +1,50 @@
+﻿@page "/"
+@using FoodOrderApp.Components.FeatureShowCase
+@using FoodOrderApp.Components.MenuComponent
+@using FoodOrderApp.Models
+@using FoodOrderApp.Services
+@using FoodOrderApp.Enum
+@inject IMenuService MenuService
+
+    <!-- Special Offer Banner -->
+    <div class="container mb-5">
+        <div class="special-offer-banner p-4 text-center">
+        <h3 class="mb-0">Today's Special: Get 10% off on all orders above €30!</h3>
+        </div>
+    </div>
+
+    <!-- Featured Items Section -->
+    <div class="container mb-5">
+        <div class="row align-items-center mb-4">
+            <div class="col">
+                <h2>Featured Items</h2>
+            </div>
+            <div class="col text-end">
+            <a href="/menu-display" class="btn btn-menu">View Menu</a>
+            </div>
+        </div>
+        <div class="row g-4">
+            @foreach (var item in FeaturedItems.Take(3))
+            {
+                <MenuComponent Item="item"></MenuComponent>
+            }
+        </div>
+    </div>
+
+    <!-- Why Choose Us Section -->
+    <FeatureShowCase></FeatureShowCase>
+
+@code {
+    private List<MenuItem> MenuItems = new();
+    private List<MenuItem> FeaturedItems => MenuItems
+        .Where(x => x.IsAvailable)
+        .Where(x => x.Category != Category.ComboDeal)
+        .OrderBy(r => Random.Shared.Next())
+        .Take(3)
+        .ToList();
+
+    protected override void OnInitialized()
+    {
+        MenuItems = MenuService.GetMenuItems();
+    }
+}

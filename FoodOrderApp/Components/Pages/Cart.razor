@@ -1,0 +1,101 @@
+﻿@page "/cart"
+@using FoodOrderApp.Components.CartComponent
+@using FoodOrderApp.Models
+@using FoodOrderApp.Services
+@inject ICartService CartService
+@implements IDisposable
+
+<div class="container my-5">
+    <div class="row">
+        <!-- Cart Items Section -->
+        <div class="col-md-8">
+            <div class="cart-section">
+                <h2 class="mb-4">Your Cart</h2>
+
+                @if (CartItems.Any())
+                {
+                    @foreach (var item in CartItems)
+                    {
+                        <CartComponent Item="item"></CartComponent>
+                        <hr class="my-3" />
+                    }
+                }
+                else
+                {
+                    <div class="empty-cart text-center py-5">
+                        <h4>Your cart is empty</h4>
+                        <NavLink href="/menu-display" class="btn btn-menu mt-3">Browse Menu</NavLink>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Order Summary Section -->
+        <div class="col-md-4">
+            <div class="order-summary p-4">
+                <h3 class="mb-4">Order Summary</h3>
+
+                <div class="summary-item d-flex justify-content-between mb-2">
+                    <span>Subtotal</span>
+                    <span>€@SubTotal.ToString("F2")</span>
+                </div>
+
+                @if (HasDiscount)
+                {
+                    <div class="summary-item d-flex justify-content-between mb-2 text-success">
+                        <span>Discount (10%)</span>
+                        <span>-€@DiscountAmount.ToString("F2")</span>
+                    </div>
+                }
+
+                <div class="summary-item d-flex justify-content-between mb-2">
+                    <span>Delivery Fee</span>
+                    <span>€@DeliveryFee.ToString("F2")</span>
+                </div>
+
+                <hr class="my-3" />
+
+                <div class="summary-item d-flex justify-content-between mb-4 fw-bold">
+                    <span>Total</span>
+                    <span>€@Total.ToString("F2")</span>
+                </div>
+
+                <button class="btn btn-menu w-100" @onclick="ProceedToCheckout">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<Models.CartItem> CartItems = new();
+
+    private decimal SubTotal => CartItems.Sum(item => item.MenuItem.Price * item.Quantity);
+    private bool HasDiscount => SubTotal >= 30;
+    private bool HasFreeDelivery => SubTotal >= 50;
+    private decimal DiscountAmount => HasDiscount ? SubTotal * 0.1m : 0;
+    private decimal DeliveryFee => HasFreeDelivery ? 0 : 2.99m;
+    private decimal Total => SubTotal - DiscountAmount + DeliveryFee;
+
+    protected override void OnInitialized()
+    {
+        CartItems = CartService.GetCartItems();
+        CartService.OnCartChanged += UpdateCart;
+    }
+
+    private void ProceedToCheckout()
+    {
+        // Implement checkout logic
+    }
+
+    private void UpdateCart()
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        CartService.OnCartChanged -= UpdateCart;
+    }
+}

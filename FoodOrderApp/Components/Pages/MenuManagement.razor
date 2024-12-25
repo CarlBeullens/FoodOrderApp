@@ -1,0 +1,106 @@
+﻿@page "/menu"
+@using FoodOrderApp.Enum
+@using FoodOrderApp.Models
+@using FoodOrderApp.Services
+@inject IMenuService MenuService
+@inject ILogger<MenuManagement> Logger
+
+<h3>Menu Management</h3>
+
+<!-- Basic Add Form -->
+<div class="form">
+    <div class="form-body">
+        <EditForm FormName="addMenuItemForm" Model="@newItem" OnSubmit="@AddItem">
+            <label for="name">Name:</label>
+            <InputText id="name" @bind-Value="newItem.Name" class="form-control" />
+
+            <label for="price" class="mt-2">Price:</label>
+            <InputNumber id="price" @bind-Value="newItem.Price" class="form-control" />
+
+            <label for="description">Description:</label>
+            <InputText id="description" @bind-Value="newItem.Description" class="form-control" />
+
+            <label for="category" class="mt-2">Category:</label>
+            <InputSelect id="category" @bind-Value="newItem.Category" class="form-control">
+                @foreach (var category in Enum.GetValues(typeof(Category)))
+                {
+                    <option value="@category">@category</option>
+                }
+            </InputSelect>
+
+            <label for="imageUrl" class="mt-2">Image Url:</label>
+            <InputText id="imageUrl" @bind-Value="newItem.ImageUrl" class="form-control" />
+
+            <label for="isAvailable" class="mt-2">Available:</label>
+            <InputSelect id="isAvailable" @bind-Value="newItem.IsAvailable" class="form-control">
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </InputSelect>
+
+            <button type="submit" class="btn btn-save mt-3">Save</button>
+        </EditForm>
+    </div>
+</div>
+
+<!-- Menu Items Table -->
+<table class="table mt-4">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in menuItems)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@item.Category</td>
+                <td>
+                    <button class="btn btn-update" @onclick="() => UpdateItem(item.Id)">Update</button>
+                    <button class="btn btn-delete" @onclick="() => DeleteItem(item.Id)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<MenuItem> menuItems = new();
+
+    [SupplyParameterFromForm]
+    private MenuItem newItem { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        LoadMenuItems();
+        Logger.LogInformation($"Page loaded");
+    }
+
+    private void AddItem()
+    {
+        MenuService.AddMenuItem(newItem);
+        LoadMenuItems();
+        newItem = new MenuItem();
+    }
+
+    private void UpdateItem(int id)
+    {
+        
+    }
+
+    private void DeleteItem(int id)
+    {
+        Logger.LogInformation($"Deleting item with Id: {id}");
+        MenuService.DeleteMenuItem(id);
+        LoadMenuItems();
+    }
+
+    private void LoadMenuItems()
+    {
+        menuItems = MenuService.GetMenuItems();
+    }
+}

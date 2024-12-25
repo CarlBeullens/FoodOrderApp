@@ -1,0 +1,36 @@
+﻿@page "/notfound/{StatusCode:int}"
+@inject NavigationManager NavigationManager
+@using System.Net
+
+<PageTitle>@StatusCode.ToString() - Blazing Burger</PageTitle>
+
+@if (StatusCode == null || StatusCode.Value == (int)HttpStatusCode.NotFound)
+{
+    <div class="not-found-container">
+        <div class="not-found-content">
+            <h1>Whoops!</h1>
+            <h2>Looks like this page is not on our menu</h2>
+            <p>The page you're looking for has been moved or doesn't exist.</p>
+            <button @onclick="NavigateToHome" class="btn btn-menu">Return to Menu</button>
+        </div>
+    </div>
+}
+else {
+    <div class="not-found-container">
+        <div class="not-found-content">
+            <h1>Error @StatusCode</h1>
+            <h2>Something went wrong</h2>
+            <p>We're having some technical difficulties. Please try again later.</p>
+            <button @onclick="NavigateToHome" class="btn btn-menu">Return to Menu</button>
+        </div>
+    </div>
+}
+
+@code {
+
+    [Parameter] public int? StatusCode { get; set; }
+
+    private void NavigateToHome() {
+        NavigationManager.NavigateTo("/");
+    }
+}

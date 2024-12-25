@@ -1,0 +1,67 @@
+﻿@page "/menu-display"
+@page "/menu-display/{category?}"
+@using FoodOrderApp.Components.MenuComponent
+@using FoodOrderApp.Enum
+@using FoodOrderApp.Models
+@using FoodOrderApp.Services
+@inject IMenuService MenuService
+@inject NavigationManager NavigationManager
+
+<h3>@(string.IsNullOrEmpty(Category) ? "Today's Menu" : $"{ToTitleCase(Category)}")</h3>
+
+<div class="row g-4">
+    @foreach (var item in MenuItems.Where(IsValidMenuItemToDisplay))
+    {
+        <MenuComponent Item="item"></MenuComponent>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string? Category { get; set; }
+
+    private List<MenuItem> MenuItems = new();
+
+    private Func<MenuItem, bool> IsValidMenuItemToDisplay = item =>
+    {
+        return item.IsAvailable && item.Category != FoodOrderApp.Enum.Category.ComboDeal;
+    };
+
+    protected override void OnInitialized()
+    {
+        LoadMenuItems();
+    }
+
+    protected override void OnParametersSet()
+    {
+        LoadMenuItems();
+    }
+
+    private void LoadMenuItems()
+    {
+        if (string.IsNullOrEmpty(Category))
+        {
+            MenuItems = MenuService.GetMenuItems();
+        }
+
+        else if (Enum.TryParse<Category>(value: Category, ignoreCase: true, result: out var parsedCategory))
+        {
+            MenuItems = MenuService.GetMenuItemsByCategory(parsedCategory);
+        }
+
+        else
+        {
+            NavigationManager.NavigateTo("/notfound/400");
+        }
+    }
+
+    private string ToTitleCase(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+        return input.Substring(0, 1).ToUpper() + input.Substring(1).ToLower();
+    }
+}

@@ -1,0 +1,68 @@
+﻿@using FoodOrderApp.Components.ComboDialog
+@using FoodOrderApp.Services
+@using FoodOrderApp.Models
+@inject IMenuService MenuService
+
+<div class="sidebar-menu">
+    <div class="menu-categories">
+        <h2>Menu</h2>
+        <ul>
+            <li>
+                <NavLink href="/menu-display" Match="NavLinkMatch.All">
+                    <span>🍽️</span> Today's Menu
+                </NavLink>
+            </li>
+            <li>
+                <NavLink href="/menu-display/burgers">
+                    <span>🍔</span> Burgers
+                </NavLink>
+            </li>
+            <li>
+                <NavLink href="/menu-display/sides">
+                    <span>🍟</span> Sides
+                </NavLink>
+            </li>
+            <li>
+                <NavLink href="/menu-display/drinks">
+                    <span>🥤</span> Drinks
+                </NavLink>
+            </li>
+            <li>
+                <NavLink href="/menu-display/desserts">
+                    <span>🍦</span> Desserts
+                </NavLink>
+            </li>
+        </ul>
+    </div>
+    <div class="special-offers">
+        <h2>Today's Specials</h2>
+        <div class="offer-card" @onclick="ShowComboDialog">
+            <div class="offer-content">
+                <div class="my-1">🍔 @ComboDeal.Name!</div>
+                <div>€@ComboDeal.Price</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ComboDialog ComboDeal="ComboDeal" @bind-IsOpen="isComboDialogOpen" />
+
+@code {
+    public required MenuItem ComboDeal;
+    private bool isComboDialogOpen = false;
+
+    private void ShowComboDialog()
+    {
+        isComboDialogOpen = true;
+    }
+
+    protected override void OnInitialized()
+    {
+        GetComboDeal();
+    }
+
+    private void GetComboDeal()
+    {
+        ComboDeal = MenuService.GetMenuItemsByCategory(FoodOrderApp.Enum.Category.ComboDeal).FirstOrDefault()!;
+    }
+}

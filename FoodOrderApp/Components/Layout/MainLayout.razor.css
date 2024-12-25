@@ -1,0 +1,103 @@
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-primary);
+}
+
+.main-header {
+    background: var(--bg-nav);
+    color: var(--text-light);
+    padding: var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-lg);
+    border-bottom: 2px solid var(--border-gold);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+}
+
+    .brand ::deep a {
+        text-decoration: none;
+        color: var(--text-light);
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+    }
+
+    .brand h1 {
+        margin: 0;
+        font-size: var(--font-size-2xl);
+        font-weight: var(--font-weight-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+.header-actions {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+    .header-actions ::deep a {
+        text-decoration: none;
+    }
+
+.cart-badge {
+    background: var(--bk-gold);
+    color: var(--text-secondary);
+    border-radius: 50%;
+    padding: 0.25rem 0.5rem;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl);
+    background: var(--bg-primary);
+}
+
+.content-area {
+    flex: 1;
+    padding: var(--spacing-xl);
+}
+
+.main-footer {
+    background-color: var(--bg-nav);
+    color: var(--text-light);
+    padding: var(--spacing-xl);
+    margin-top: auto;
+    border-top: 2px solid var(--border-gold);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+    .footer-links a {
+        color: var(--text-light);
+        text-decoration: none;
+        transition: var(--transition-normal);
+    }
+
+        .footer-links a:hover {
+            color: var(--bk-gold);
+        }

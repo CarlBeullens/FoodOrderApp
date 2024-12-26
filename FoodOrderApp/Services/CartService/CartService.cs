@@ -1,6 +1,6 @@
 ﻿using FoodOrderApp.Models;
 
-namespace FoodOrderApp.Services
+namespace FoodOrderApp.Services.CartService
 {
     public class CartService : ICartService
     {
@@ -77,6 +77,26 @@ namespace FoodOrderApp.Services
         public int GetCartItemCount()
         {
             return _cartItems.Sum(item => item.Quantity);
+        }
+
+        public CartCalculation CalculateCart()
+        {
+            var subTotal = _cartItems.Sum(item => item.MenuItem.Price * item.Quantity);
+            var hasDiscount = subTotal >= 30;
+            var hasFreeDelivery = subTotal >= 50;
+            var discount = hasDiscount ? subTotal * 0.1m : 0;
+            var deliveryFee = hasFreeDelivery ? 0 : 2.99m;
+            var total = subTotal - discount + deliveryFee;
+
+            return new CartCalculation
+            {
+                SubTotal = subTotal,
+                HasDiscount = hasDiscount,
+                HasFreeDelivery = hasFreeDelivery,
+                Discount = discount,
+                DeliveryFee = deliveryFee,
+                Total = total
+            };
         }
 
         private void UpdateCartState()

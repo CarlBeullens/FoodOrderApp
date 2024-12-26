@@ -1,6 +1,8 @@
 using FoodOrderApp.Components;
 using FoodOrderApp.Data;
 using FoodOrderApp.Services;
+using FoodOrderApp.Services.CartService;
+using FoodOrderApp.Services.CheckoutService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IMenuService, MenuService>();
 builder.Services.AddSingleton<ICartService, CartService>();
+builder.Services.AddScoped<ICheckoutService, CheckOutService>();
 
 var app = builder.Build();
 

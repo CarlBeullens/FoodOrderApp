@@ -1,9 +1,14 @@
 ﻿@page "/cart"
 @using FoodOrderApp.Components.CartComponent
 @using FoodOrderApp.Models
-@using FoodOrderApp.Services
+@using FoodOrderApp.Services.CartService
+@using FoodOrderApp.Services.CheckoutService
 @inject ICartService CartService
+@inject ICheckoutService CheckoutService
+@inject NavigationManager NavigationManager
 @implements IDisposable
+
+<PageTitle>Cart - Blazing Burger</PageTitle>
 
 <div class="container my-5">
     <div class="row">
@@ -44,7 +49,7 @@
                 {
                     <div class="summary-item d-flex justify-content-between mb-2 text-success">
                         <span>Discount (10%)</span>
-                        <span>-€@DiscountAmount.ToString("F2")</span>
+                        <span>-€@Discount.ToString("F2")</span>
                     </div>
                 }
 
@@ -57,7 +62,7 @@
 
                 <div class="summary-item d-flex justify-content-between mb-4 fw-bold">
                     <span>Total</span>
-                    <span>€@Total.ToString("F2")</span>
+                    <span>€@TotalAmount.ToString("F2")</span>
                 </div>
 
                 <button class="btn btn-menu w-100" @onclick="ProceedToCheckout">
@@ -69,14 +74,13 @@
 </div>
 
 @code {
-    private List<Models.CartItem> CartItems = new();
+    private List<CartItem> CartItems = new();
 
-    private decimal SubTotal => CartItems.Sum(item => item.MenuItem.Price * item.Quantity);
-    private bool HasDiscount => SubTotal >= 30;
-    private bool HasFreeDelivery => SubTotal >= 50;
-    private decimal DiscountAmount => HasDiscount ? SubTotal * 0.1m : 0;
-    private decimal DeliveryFee => HasFreeDelivery ? 0 : 2.99m;
-    private decimal Total => SubTotal - DiscountAmount + DeliveryFee;
+    private decimal SubTotal => CartService.CalculateCart().SubTotal;
+    private bool HasDiscount => CartService.CalculateCart().HasDiscount;
+    private decimal Discount => CartService.CalculateCart().Discount;
+    private decimal DeliveryFee => CartService.CalculateCart().DeliveryFee;
+    private decimal TotalAmount => CartService.CalculateCart().Total;
 
     protected override void OnInitialized()
     {
@@ -86,7 +90,12 @@
 
     private void ProceedToCheckout()
     {
-        // Implement checkout logic
+        CheckoutService.State = new CheckOutState 
+        { 
+            CartItems = CartItems,
+            CartCalculation = CartService.CalculateCart()
+        };
+        NavigationManager.NavigateTo("/payment");
     }
 
     private void UpdateCart()

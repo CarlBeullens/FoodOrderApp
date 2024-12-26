@@ -1,12 +1,12 @@
 ﻿:root {
     /* Primary Colors */
-    --bk-red: #D04D36;
+    --bk-red: #C13B28;
     --bk-brown: #502314;
     --bk-gold: #F2A900;
     --bk-white: #FFFFFF;
     
     /* Background Colors */
-    --bg-primary: #F8E8E0;
+    --bg-primary: #FDF5F1;
     --bg-nav: var(--bk-brown);
     --bg-card: #FAF7F6;
     --bg-accent: var(--bk-red);
@@ -18,15 +18,17 @@
     --text-accent: var(--bk-red);
     
     /* Interactive States */
-    --hover-red: #FF4B2B;
+    --hover-red: #D84B38;
     --hover-yellow: #FF9B0F;
-    --active-red: #B41E00;
+    --active-red: #A32817;
     
     /* Status Colors */
     --warning: var(--bk-gold);
     
     /* Border Colors */
+    --border-black: #1A1A1A;
     --border-gold: var(--bk-gold);
+    --border-red: var(--bk-red);
     
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -59,6 +61,7 @@
     
     /* Transitions */
     --transition-normal: 200ms ease-in-out;
+    --transition-slow: 350ms ease-in-out;
     
     /* Z-index */
     --z-modal: 1030;

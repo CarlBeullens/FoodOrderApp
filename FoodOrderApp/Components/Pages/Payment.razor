@@ -1,0 +1,145 @@
+@page "/payment"
+@using FoodOrderApp.Models
+@using FoodOrderApp.Services.CartService
+@using FoodOrderApp.Services.CheckoutService
+@inject NavigationManager NavigationManager
+@inject ICheckoutService CheckoutService
+
+<PageTitle>Payment - Blazing Burger</PageTitle>
+
+<div class="payment-container">
+    <h2 class="payment-title">Order Summary</h2>
+
+    @if (!CartItems.Any())
+    {
+    <div class="alert alert-warning">
+        Your cart is empty. Please add items before proceeding to payment.
+    </div>
+    }
+    else
+    {
+    <div class="order-summary">
+        @foreach (var item in CartItems)
+        {
+        <div class="order-item">
+            <div class="item-details">
+                <span class="item-name">@item.MenuItem.Name</span>
+                <span class="item-quantity">x @item.Quantity</span>
+            </div>
+            <span class="item-price">€@((item.MenuItem.Price * item.Quantity).ToString("F2"))</span>
+        </div>
+        }
+
+        <div class="divider"></div>
+
+        <div class="summary-details">
+            <div class="summary-row">
+                <span>Subtotal: €@CartCalculation.SubTotal.ToString("F2")</span>
+            </div>
+
+            @if (CartCalculation.HasDiscount)
+            {
+                <div class="summary-row discount">
+                    <span>Discount (10%): €@CartCalculation.Discount.ToString("F2")</span>
+                </div>
+            }
+
+            @if (CartCalculation.HasFreeDelivery)
+            {
+                <div class="summary-row">
+                    <span class="free-delivery">FREE DELIVERY</span>
+                </div>
+            }
+            else
+            {
+                <div class="fee-info">
+                    <span>Delivery Fee: €@CartCalculation.DeliveryFee.ToString("F2")</span>
+                </div>
+            }
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="total">
+            <span>Total</span>
+            <span>€@CartCalculation.Total.ToString("F2")</span>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+    <div class="alert alert-danger">
+        @ErrorMessage
+    </div>
+    }
+
+    <div class="action-buttons">
+        <button class="btn btn-header" @onclick="GoBack" disabled="@IsProcessing">
+            Back to Cart
+        </button>
+        <button class="btn btn-menu" @onclick="HandleCheckout" disabled="@IsProcessing">
+            @if (IsProcessing)
+            {
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            <span>Processing...</span>
+            }
+            else
+            {
+            <span>Pay €@CartCalculation.Total.ToString("F2")</span>
+            }
+        </button>
+    </div>
+    }
+</div>
+
+@code {
+    private List<CartItem> CartItems = new();
+    private CartCalculation CartCalculation = new();
+    private bool IsProcessing;
+    private string ErrorMessage = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        var state = CheckoutService.State;
+
+        if (!state.CartItems.Any())
+        {
+            return;
+        }
+        
+        CartItems = state.CartItems;
+        CartCalculation = state.CartCalculation;
+    }
+
+    private async Task HandleCheckout()
+    {
+        try
+        {
+            IsProcessing = true;
+            ErrorMessage = string.Empty;
+            StateHasChanged();
+
+            // Create URLs for success and cancel scenarios
+            var successUrl = $"{NavigationManager.BaseUri}order-confirmation";
+            var cancelUrl = $"{NavigationManager.BaseUri}payment";
+
+            var checkoutUrl = await CheckoutService.CreateCheckoutSession(CartItems, CartCalculation, successUrl, cancelUrl);
+
+            NavigationManager.NavigateTo(checkoutUrl, forceLoad: true);
+        }
+        catch (Exception)
+        {
+            ErrorMessage = "Unable to process payment at this time. Please try again later.";
+        }
+        finally
+        {
+            IsProcessing = false;
+            StateHasChanged();
+        }
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/cart");
+    }
+}

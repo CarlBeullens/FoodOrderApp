@@ -15,7 +15,7 @@ namespace FoodOrderApp.Data
                     Description = "Classic beef burger with cheese",
                     Price = 9.99m,
                     Category = Category.Burgers,
-                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cheeseburger.jpg",
+                    ImageUrl = "https://images.pexels.com/photos/14678738/pexels-photo-14678738.jpeg",
                     IsAvailable = true
                 },
                 new MenuItem
@@ -25,7 +25,7 @@ namespace FoodOrderApp.Data
                     Description = "Crispy golden fries",
                     Price = 4.99m,
                     Category = Category.Sides,
-                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cheeseburger.jpg",
+                    ImageUrl = "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg",
                     IsAvailable = true
                 },
                 new MenuItem
@@ -35,7 +35,7 @@ namespace FoodOrderApp.Data
                     Description = "Rich and creamy shake",
                     Price = 5.99m,
                     Category = Category.Drinks,
-                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cheeseburger.jpg",
+                    ImageUrl = "https://images.pexels.com/photos/3727250/pexels-photo-3727250.jpeg",
                     IsAvailable = true
                 },
                 new MenuItem
@@ -45,7 +45,7 @@ namespace FoodOrderApp.Data
                     Description = "Double patty with crispy bacon and special sauce",
                     Price = 12.99m,
                     Category = Category.Burgers,
-                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cheeseburger.jpg",
+                    ImageUrl = "https://images.pexels.com/photos/3052362/pexels-photo-3052362.jpeg",
                     IsAvailable = true
                 },
                 new MenuItem
@@ -55,7 +55,7 @@ namespace FoodOrderApp.Data
                     Description = "Plant-based patty with grilled mushrooms and Swiss cheese",
                     Price = 10.99m,
                     Category = Category.Vegetarian,
-                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cheeseburger.jpg",
+                    ImageUrl = "https://images.pexels.com/photos/2874989/pexels-photo-2874989.jpeg",
                     IsAvailable = true
                 },
                 new MenuItem
@@ -65,7 +65,7 @@ namespace FoodOrderApp.Data
                     Description = "Beer-battered crispy onion rings",
                     Price = 5.99m,
                     Category = Category.Sides,
-                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cheeseburger.jpg",
+                    ImageUrl = "https://images.pexels.com/photos/6036950/pexels-photo-6036950.jpeg",
                     IsAvailable = true
                 },
                 new MenuItem
@@ -75,7 +75,7 @@ namespace FoodOrderApp.Data
                     Description = "Warm apple pie with vanilla ice cream",
                     Price = 6.99m,
                     Category = Category.Desserts,
-                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cheeseburger.jpg",
+                    ImageUrl = "https://images.pexels.com/photos/2957897/pexels-photo-2957897.jpeg",
                     IsAvailable = true
                 },
                 new MenuItem
@@ -85,7 +85,7 @@ namespace FoodOrderApp.Data
                     Description = "Rich chocolate brownie with whipped cream",
                     Price = 5.99m,
                     Category = Category.Desserts,
-                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cheeseburger.jpg",
+                    ImageUrl = "https://images.pexels.com/photos/2067396/pexels-photo-2067396.jpeg",
                     IsAvailable = true
                 },
                 new MenuItem
@@ -95,7 +95,7 @@ namespace FoodOrderApp.Data
                     Description = "Fresh squeezed lemonade with mint",
                     Price = 3.99m,
                     Category = Category.Drinks,
-                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cheeseburger.jpg",
+                    ImageUrl = "https://images.pexels.com/photos/2109099/pexels-photo-2109099.jpeg",
                     IsAvailable = true
                 },
                 new MenuItem
@@ -105,7 +105,7 @@ namespace FoodOrderApp.Data
                     Description = "Fresh vegetables with hummus in a whole wheat wrap",
                     Price = 8.99m,
                     Category = Category.Vegetarian,
-                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cheeseburger.jpg",
+                    ImageUrl = "https://images.pexels.com/photos/2955819/pexels-photo-2955819.jpeg",
                     IsAvailable = true
                 },
                 new MenuItem
@@ -117,7 +117,7 @@ namespace FoodOrderApp.Data
                                 "Includes crispy medium fries and your choice of refreshing drink!",
                     Price = 12.99m,
                     Category = Category.ComboDeal,
-                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cheeseburger.jpg",
+                    ImageUrl = "https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg",
                     IsAvailable = true
                 }
             );

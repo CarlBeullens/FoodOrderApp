@@ -1,6 +1,6 @@
 ﻿using FoodOrderApp.Models;
 
-namespace FoodOrderApp.Services
+namespace FoodOrderApp.Services.CartService
 {
     public interface ICartService
     {
@@ -12,5 +12,6 @@ namespace FoodOrderApp.Services
         void DecreaseQuantity(MenuItem menuItem);
         void ClearCart();
         int GetCartItemCount();
+        CartCalculation CalculateCart();
     }
 }

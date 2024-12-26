@@ -1,6 +1,7 @@
 ﻿using FoodOrderApp.Data;
 using FoodOrderApp.Enum;
 using FoodOrderApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodOrderApp.Services
 {
@@ -11,6 +12,7 @@ namespace FoodOrderApp.Services
         public List<MenuItem> GetMenuItems()
         {
             return _dbContext.MenuItems
+                .AsNoTracking()
                 .OrderBy(i => i.Category)
                 .ToList();
         }
@@ -18,13 +20,14 @@ namespace FoodOrderApp.Services
         public List<MenuItem> GetMenuItemsByCategory(Category category)
         {
             return _dbContext.MenuItems
+                .AsNoTracking()
                 .Where(i => i.Category == category)
                 .ToList();
         }
 
         public MenuItem? GetMenuItem(int id)
         {
-            return _dbContext.MenuItems.FirstOrDefault(i => i.Id == id);
+            return _dbContext.MenuItems.AsNoTracking().FirstOrDefault(i => i.Id == id);
         }
 
         public void AddMenuItem(MenuItem item)
@@ -36,11 +39,17 @@ namespace FoodOrderApp.Services
         public void UpdateMenuItem(MenuItem item)
         {
             var existingItem = _dbContext.MenuItems.FirstOrDefault(i => i.Id == item.Id);
-            if (existingItem != null)
-            {
-                _dbContext.MenuItems.Update(existingItem);
-                _dbContext.SaveChanges();
-            }
+            if (existingItem == null) return;
+            
+            existingItem.Name = item.Name;
+            existingItem.Price = item.Price;
+            existingItem.Description = existingItem.Description;
+            existingItem.Category = item.Category;
+            existingItem.ImageUrl = existingItem.ImageUrl;
+            existingItem.IsAvailable = existingItem.IsAvailable;
+            
+            _dbContext.MenuItems.Update(existingItem);
+            _dbContext.SaveChanges();
         }
 
         public void DeleteMenuItem(int id)

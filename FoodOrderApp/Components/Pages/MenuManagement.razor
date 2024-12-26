@@ -3,25 +3,24 @@
 @using FoodOrderApp.Models
 @using FoodOrderApp.Services
 @inject IMenuService MenuService
-@inject ILogger<MenuManagement> Logger
 
 <h3>Menu Management</h3>
 
-<!-- Basic Add Form -->
+<!-- Add Form -->
 <div class="form">
     <div class="form-body">
-        <EditForm FormName="addMenuItemForm" Model="@newItem" OnSubmit="@AddItem">
+        <EditForm FormName="addMenuItemForm" Model="@NewItem" OnSubmit="@AddItem">
             <label for="name">Name:</label>
-            <InputText id="name" @bind-Value="newItem.Name" class="form-control" />
+            <InputText id="name" @bind-Value="NewItem.Name" class="form-control" />
 
             <label for="price" class="mt-2">Price:</label>
-            <InputNumber id="price" @bind-Value="newItem.Price" class="form-control" />
+            <InputNumber id="price" @bind-Value="NewItem.Price" class="form-control" />
 
             <label for="description">Description:</label>
-            <InputText id="description" @bind-Value="newItem.Description" class="form-control" />
+            <InputText id="description" @bind-Value="NewItem.Description" class="form-control" />
 
             <label for="category" class="mt-2">Category:</label>
-            <InputSelect id="category" @bind-Value="newItem.Category" class="form-control">
+            <InputSelect id="category" @bind-Value="NewItem.Category" class="form-control">
                 @foreach (var category in Enum.GetValues(typeof(Category)))
                 {
                     <option value="@category">@category</option>
@@ -29,10 +28,10 @@
             </InputSelect>
 
             <label for="imageUrl" class="mt-2">Image Url:</label>
-            <InputText id="imageUrl" @bind-Value="newItem.ImageUrl" class="form-control" />
+            <InputText id="imageUrl" @bind-Value="NewItem.ImageUrl" class="form-control" />
 
             <label for="isAvailable" class="mt-2">Available:</label>
-            <InputSelect id="isAvailable" @bind-Value="newItem.IsAvailable" class="form-control">
+            <InputSelect id="isAvailable" @bind-Value="NewItem.IsAvailable" class="form-control">
                 <option value="true">True</option>
                 <option value="false">False</option>
             </InputSelect>
@@ -45,62 +44,135 @@
 <!-- Menu Items Table -->
 <table class="table mt-4">
     <thead>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Actions</th>
-        </tr>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Actions</th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var item in menuItems)
-        {
-            <tr>
-                <td>@item.Name</td>
-                <td>@item.Price.ToString("C")</td>
-                <td>@item.Category</td>
-                <td>
-                    <button class="btn btn-update" @onclick="() => UpdateItem(item.Id)">Update</button>
-                    <button class="btn btn-delete" @onclick="() => DeleteItem(item.Id)">Delete</button>
-                </td>
-            </tr>
-        }
+    @foreach (var item in MenuItems)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>€@item.Price</td>
+            <td>@item.Category</td>
+            <td>
+                <button class="btn btn-update" @onclick="() => ShowUpdateModal(item)">Update</button>
+                <button class="btn btn-delete" @onclick="() => DeleteItem(item.Id)">Delete</button>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
 
+<!-- Update Modal -->
+@if (IsVisibleUpdateModal)
+{
+<div class="modal" tabindex="-1" style="display:block">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Menu Item</h5>
+            </div>
+            <div class="modal-body">
+                <EditForm FormName="updateMenuItemForm" Model="@ItemToUpdate" OnSubmit="@HandleUpdate">
+                    <label for="updateName">Name:</label>
+                    <InputText id="updateName" @bind-Value="ItemToUpdate.Name" class="form-control" />
+
+                    <label for="updatePrice" class="mt-2">Price:</label>
+                    <InputNumber id="updatePrice" @bind-Value="ItemToUpdate.Price" class="form-control" />
+
+                    <label for="updateDescription" class="mt-2">Description:</label>
+                    <InputText id="updateDescription" @bind-Value="ItemToUpdate.Description" class="form-control" />
+
+                    <label for="updateCategory" class="mt-2">Category:</label>
+                    <InputSelect id="updateCategory" @bind-Value="ItemToUpdate.Category" class="form-control">
+                        @foreach (var category in Enum.GetValues(typeof(Category)))
+                        {
+                            <option value="@category">@category</option>
+                        }
+                    </InputSelect>
+
+                    <label for="updateImageUrl" class="mt-2">Image URL:</label>
+                    <InputText id="updateImageUrl" @bind-Value="ItemToUpdate.ImageUrl" class="form-control" />
+
+                    <label for="updateIsAvailable" class="mt-2">Available:</label>
+                    <InputSelect id="updateIsAvailable" @bind-Value="ItemToUpdate.IsAvailable" class="form-control">
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </InputSelect>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="CloseUpdateModal">Close</button>
+                        <button type="submit" class="btn btn-save">Save</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
 @code {
-    private List<MenuItem> menuItems = new();
+    private List<MenuItem> MenuItems = new();
+    private MenuItem ItemToUpdate = new();
+    private bool IsVisibleUpdateModal = false;
 
     [SupplyParameterFromForm]
-    private MenuItem newItem { get; set; } = new();
+    private MenuItem NewItem { get; set; } = new();
 
     protected override void OnInitialized()
     {
         LoadMenuItems();
-        Logger.LogInformation($"Page loaded");
     }
 
     private void AddItem()
     {
-        MenuService.AddMenuItem(newItem);
+        MenuService.AddMenuItem(NewItem);
         LoadMenuItems();
-        newItem = new MenuItem();
+        NewItem = new MenuItem();
+    }
+    
+    private void HandleUpdate()
+    {
+        MenuService.UpdateMenuItem(ItemToUpdate);
+        LoadMenuItems();
+        CloseUpdateModal();
     }
 
-    private void UpdateItem(int id)
+    private void ShowUpdateModal(MenuItem item)
     {
+        ItemToUpdate = new MenuItem 
+        {
+            Id = item.Id,
+            Name = item.Name,
+            Price = item.Price,
+            Description = item.Description,
+            Category = item.Category,
+            ImageUrl = item.ImageUrl,
+            IsAvailable = item.IsAvailable
+        };
         
+        IsVisibleUpdateModal = true;
+    }
+    
+    private void CloseUpdateModal()
+    {
+        IsVisibleUpdateModal = false;
+        ItemToUpdate = new();
     }
 
     private void DeleteItem(int id)
     {
-        Logger.LogInformation($"Deleting item with Id: {id}");
         MenuService.DeleteMenuItem(id);
         LoadMenuItems();
     }
 
     private void LoadMenuItems()
     {
-        menuItems = MenuService.GetMenuItems();
+        MenuItems = MenuService.GetMenuItems();
     }
 }

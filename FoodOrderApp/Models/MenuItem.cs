@@ -10,6 +10,7 @@ namespace FoodOrderApp.Models
         public decimal Price { get; set; }
         public Category Category { get; set; }
         public string ImageUrl { get; set; } = "https://placehold.co/400";
+        public NutritionalInfo NutritionalInfo { get; set; } = new();
         public bool IsAvailable { get; set; }
     }
 }

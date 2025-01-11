@@ -5,9 +5,14 @@ namespace FoodOrderApp.Data
 {
     public static class DbInitializer
     {
-        public static void Seed(AppDbContext dbContext)
+        public static async Task Seed(AppDbContext dbContext)
         {
-            dbContext.MenuItems.AddRange(
+            if (dbContext.MenuItems.Any())
+            {
+                return;
+            }
+            
+            await dbContext.MenuItems.AddRangeAsync(
                 new MenuItem
                 {
                     Id = 1,
@@ -16,6 +21,7 @@ namespace FoodOrderApp.Data
                     Price = 9.99m,
                     Category = Category.Burgers,
                     ImageUrl = "https://images.pexels.com/photos/14678738/pexels-photo-14678738.jpeg",
+                    NutritionalInfo = NutritionalData.Cheeseburger,
                     IsAvailable = true
                 },
                 new MenuItem
@@ -26,6 +32,7 @@ namespace FoodOrderApp.Data
                     Price = 4.99m,
                     Category = Category.Sides,
                     ImageUrl = "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg",
+                    NutritionalInfo = NutritionalData.FrenchFries,
                     IsAvailable = true
                 },
                 new MenuItem
@@ -36,6 +43,7 @@ namespace FoodOrderApp.Data
                     Price = 5.99m,
                     Category = Category.Drinks,
                     ImageUrl = "https://images.pexels.com/photos/3727250/pexels-photo-3727250.jpeg",
+                    NutritionalInfo = NutritionalData.ChocolateShake,
                     IsAvailable = true
                 },
                 new MenuItem
@@ -46,6 +54,7 @@ namespace FoodOrderApp.Data
                     Price = 12.99m,
                     Category = Category.Burgers,
                     ImageUrl = "https://images.pexels.com/photos/3052362/pexels-photo-3052362.jpeg",
+                    NutritionalInfo = NutritionalData.DoubleBaconBurger,
                     IsAvailable = true
                 },
                 new MenuItem
@@ -56,6 +65,7 @@ namespace FoodOrderApp.Data
                     Price = 10.99m,
                     Category = Category.Vegetarian,
                     ImageUrl = "https://images.pexels.com/photos/2874989/pexels-photo-2874989.jpeg",
+                    NutritionalInfo = NutritionalData.MushroomSwissBurger,
                     IsAvailable = true
                 },
                 new MenuItem
@@ -66,6 +76,7 @@ namespace FoodOrderApp.Data
                     Price = 5.99m,
                     Category = Category.Sides,
                     ImageUrl = "https://images.pexels.com/photos/6036950/pexels-photo-6036950.jpeg",
+                    NutritionalInfo = NutritionalData.OnionRings,
                     IsAvailable = true
                 },
                 new MenuItem
@@ -76,6 +87,7 @@ namespace FoodOrderApp.Data
                     Price = 6.99m,
                     Category = Category.Desserts,
                     ImageUrl = "https://images.pexels.com/photos/2957897/pexels-photo-2957897.jpeg",
+                    NutritionalInfo = NutritionalData.ApplePie,
                     IsAvailable = true
                 },
                 new MenuItem
@@ -86,6 +98,7 @@ namespace FoodOrderApp.Data
                     Price = 5.99m,
                     Category = Category.Desserts,
                     ImageUrl = "https://images.pexels.com/photos/2067396/pexels-photo-2067396.jpeg",
+                    NutritionalInfo = NutritionalData.ChocolateBrownie,
                     IsAvailable = true
                 },
                 new MenuItem
@@ -96,6 +109,7 @@ namespace FoodOrderApp.Data
                     Price = 3.99m,
                     Category = Category.Drinks,
                     ImageUrl = "https://images.pexels.com/photos/2109099/pexels-photo-2109099.jpeg",
+                    NutritionalInfo = NutritionalData.Lemonade,
                     IsAvailable = true
                 },
                 new MenuItem
@@ -106,6 +120,7 @@ namespace FoodOrderApp.Data
                     Price = 8.99m,
                     Category = Category.Vegetarian,
                     ImageUrl = "https://images.pexels.com/photos/2955819/pexels-photo-2955819.jpeg",
+                    NutritionalInfo = NutritionalData.VeggieWrap,
                     IsAvailable = true
                 },
                 new MenuItem
@@ -118,11 +133,12 @@ namespace FoodOrderApp.Data
                     Price = 12.99m,
                     Category = Category.ComboDeal,
                     ImageUrl = "https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg",
+                    NutritionalInfo = NutritionalData.BlazingComboDeal,
                     IsAvailable = true
                 }
             );
 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
     }
 }

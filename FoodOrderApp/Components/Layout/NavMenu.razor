@@ -1,6 +1,7 @@
 ﻿@using FoodOrderApp.Components.ComboDialog
 @using FoodOrderApp.Services
 @using FoodOrderApp.Models
+@using FoodOrderApp.Services.MenuService
 @inject IMenuService MenuService
 
 <div class="sidebar-menu">
@@ -45,15 +46,17 @@
     </div>
 </div>
 
-<ComboDialog ComboDeal="ComboDeal" @bind-IsOpen="isComboDialogOpen" />
+<ComboDialog
+    ComboDeal="ComboDeal" @bind-Show="showComboDialog">
+</ComboDialog>
 
 @code {
     public required MenuItem ComboDeal;
-    private bool isComboDialogOpen = false;
+    private bool showComboDialog = false;
 
     private void ShowComboDialog()
     {
-        isComboDialogOpen = true;
+        showComboDialog = true;
     }
 
     protected override void OnInitialized()

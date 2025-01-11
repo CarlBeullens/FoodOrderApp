@@ -1,8 +1,9 @@
 using FoodOrderApp.Components;
 using FoodOrderApp.Data;
-using FoodOrderApp.Services;
 using FoodOrderApp.Services.CartService;
 using FoodOrderApp.Services.CheckoutService;
+using FoodOrderApp.Services.EmailService;
+using FoodOrderApp.Services.MenuService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,12 +12,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("AppDb"));
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.UseInMemoryDatabase("AppDb"));
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseNpgsql(connectionString);
+});
+
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped<IMenuService, MenuService>();
-builder.Services.AddSingleton<ICartService, CartService>();
+builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICheckoutService, CheckOutService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 
 var app = builder.Build();
 
@@ -41,7 +51,7 @@ app.UseStatusCodePagesWithRedirects("/NotFound/{0}");
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    DbInitializer.Seed(context);
+    await DbInitializer.Seed(context);
 }
 
 app.Run();

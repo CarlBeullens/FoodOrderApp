@@ -1,11 +1,11 @@
-﻿@using FoodOrderApp.Services
-@using FoodOrderApp.Models
+﻿@using FoodOrderApp.Models
 @using FoodOrderApp.Services.CartService
+@using FoodOrderApp.Services.MenuService
 @inject IMenuService MenuService
 @inject ICartService CartService
 
-<div class="combo-dialog-backdrop @(IsOpen ? "show" : "")" @onclick="HandleClose"></div>
-<div class="combo-dialog @(IsOpen ? "show" : "")">
+<div class="combo-dialog-backdrop @(Show ? "show" : "")" @onclick="HandleClose"></div>
+<div class="combo-dialog @(Show ? "show" : "")">
     <div class="combo-content" @onclick:stopPropagation="true">
         <div class="combo-header">
             <h3>🍔 @ComboDeal.Name</h3>
@@ -24,18 +24,13 @@
 </div>
 
 @code {
-    [Parameter]
-    public bool IsOpen { get; set; }
-
-    [Parameter]
-    public EventCallback<bool> IsOpenChanged { get; set; }
-
-    [Parameter]
-    public required MenuItem ComboDeal { get; set; }
+    [Parameter] public bool Show { get; set; }
+    [Parameter] public EventCallback<bool> ShowChanged { get; set; }
+    [Parameter] public required MenuItem ComboDeal { get; set; }
     
     private async Task HandleClose()
     {
-        await IsOpenChanged.InvokeAsync(false);
+        await ShowChanged.InvokeAsync(false);
     }
 
     private async Task AddToCart()

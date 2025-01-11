@@ -2,32 +2,63 @@
 using FoodOrderApp.Enum;
 using FoodOrderApp.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
-namespace FoodOrderApp.Services
+namespace FoodOrderApp.Services.MenuService
 {
-    public class MenuService(AppDbContext dbContext) : IMenuService
+    public class MenuService : IMenuService
     {
-        private readonly AppDbContext _dbContext = dbContext;
+        private readonly AppDbContext _dbContext;
+        private readonly IMemoryCache _cache;
 
+        public MenuService(IMemoryCache cache, AppDbContext dbContext)
+        {
+            _cache = cache;
+            _dbContext = dbContext;
+        }
+        
         public List<MenuItem> GetMenuItems()
         {
-            return _dbContext.MenuItems
-                .AsNoTracking()
-                .OrderBy(i => i.Category)
-                .ToList();
+            var items = _cache.Get<List<MenuItem>>("MenuItems");
+            
+            if (items == null)
+            {
+                items = _dbContext.MenuItems
+                    .AsNoTracking()
+                    .OrderBy(i => i.Category)
+                    .ToList();
+
+                _cache.Set("MenuItems", items, TimeSpan.FromHours(1));
+            }
+
+            return items;
         }
 
         public List<MenuItem> GetMenuItemsByCategory(Category category)
         {
-            return _dbContext.MenuItems
-                .AsNoTracking()
-                .Where(i => i.Category == category)
-                .ToList();
+            var items = _cache.Get<List<MenuItem>>($"MenuItem_{category}");
+
+            if (items == null)
+            {
+                return _dbContext.MenuItems
+                    .AsNoTracking()
+                    .Where(i => i.Category == category)
+                    .ToList();
+            }
+            
+            return items;
         }
 
         public MenuItem? GetMenuItem(int id)
         {
-            return _dbContext.MenuItems.AsNoTracking().FirstOrDefault(i => i.Id == id);
+            var item = _cache.Get<MenuItem?>($"MenuItem_{id}");
+
+            if (item == null)
+            {
+                return _dbContext.MenuItems.AsNoTracking().FirstOrDefault(i => i.Id == id);
+            }
+
+            return item;
         }
 
         public void AddMenuItem(MenuItem item)

@@ -1,0 +1,82 @@
+@using FoodOrderApp.Models
+
+@if(Show) 
+{
+<div class="nutrition-modal">
+    <div class="nutrition-content">
+        <div class="nutrition-header">
+            <h4>@ItemName Nutrition Facts</h4>
+            <button class="btn btn-small" @onclick="HandleClose">×</button>
+        </div>
+
+        <div class="nutrition-body">
+            <div class="nutrition-main">
+                <div class="nutrition-row">
+                    <span>Calories</span>
+                    <strong>@Info.Calories</strong>
+                </div>
+            </div>
+
+            <div class="nutrition-section">
+                <div class="nutrition-row">
+                    <span>Total Fat</span>
+                    <span>@Info.TotalFat g</span>
+                </div>
+                <div class="nutrition-row sub">
+                    <span>Saturated Fat</span>
+                    <span>@Info.SaturatedFat g</span>
+                </div>
+                <div class="nutrition-row sub">
+                    <span>Trans Fat</span>
+                    <span>@Info.TransFat g</span>
+                </div>
+            </div>
+
+            <div class="nutrition-section">
+                <div class="nutrition-row">
+                    <span>Cholesterol</span>
+                    <span>@Info.Cholesterol mg</span>
+                </div>
+                <div class="nutrition-row">
+                    <span>Sodium</span>
+                    <span>@Info.Sodium mg</span>
+                </div>
+            </div>
+
+            <div class="nutrition-section">
+                <div class="nutrition-row">
+                    <span>Total Carbohydrates</span>
+                    <span>@Info.Carbohydrates g</span>
+                </div>
+                <div class="nutrition-row sub">
+                    <span>Dietary Fiber</span>
+                    <span>@Info.Fiber g</span>
+                </div>
+                <div class="nutrition-row sub">
+                    <span>Sugars</span>
+                    <span>@Info.Sugar g</span>
+                </div>
+            </div>
+
+            <div class="nutrition-section">
+                <div class="nutrition-row">
+                    <span>Protein</span>
+                    <span>@Info.Protein g</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@code {
+    [Parameter] public bool Show { get; set; }
+    [Parameter] public EventCallback<bool> ShowChanged { get; set; }
+    [Parameter] public string ItemName { get; set; } = string.Empty;
+    [Parameter] public NutritionalInfo Info { get; set; } = new();
+
+    private async Task HandleClose()
+    {
+        await ShowChanged.InvokeAsync(false);
+    }
+}

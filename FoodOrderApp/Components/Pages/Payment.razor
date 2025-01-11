@@ -120,8 +120,8 @@
             StateHasChanged();
 
             // Create URLs for success and cancel scenarios
-            var successUrl = $"{NavigationManager.BaseUri}order-confirmation";
-            var cancelUrl = $"{NavigationManager.BaseUri}payment";
+            var successUrl = $"{NavigationManager.BaseUri}order-confirmation/{{CHECKOUT_SESSION_ID}}";
+            var cancelUrl = $"{NavigationManager.BaseUri}order-failed";
 
             var checkoutUrl = await CheckoutService.CreateCheckoutSession(CartItems, CartCalculation, successUrl, cancelUrl);
 

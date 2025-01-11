@@ -1,0 +1,30 @@
+@page "/order-failed"
+@inject NavigationManager NavigationManager
+
+<div class="failed-container">
+    <div class="failed-card">
+        <h2 class="failed-title">Payment Failed</h2>
+        <p class="failed-message">Your order could not be processed. Please try again.</p>
+
+        <div class="action-buttons">
+            <button class="btn btn-header" @onclick="ReturnToCart">
+                Return to Cart
+            </button>
+            <button class="btn btn-menu" @onclick="TryAgain">
+                Try Again
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private void ReturnToCart()
+    {
+        NavigationManager.NavigateTo("/cart");
+    }
+
+    private void TryAgain() 
+    {
+        NavigationManager.NavigateTo("/payment");
+    }
+}

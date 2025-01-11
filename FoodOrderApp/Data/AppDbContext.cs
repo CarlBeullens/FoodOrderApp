@@ -11,9 +11,7 @@ namespace FoodOrderApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MenuItem>()
-                .Property(m => m.Id)
-                .ValueGeneratedOnAdd();
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

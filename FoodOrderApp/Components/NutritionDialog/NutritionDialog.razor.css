@@ -1,0 +1,48 @@
+.nutrition-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal);
+}
+
+.nutrition-content {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 400px;
+    margin: var(--spacing-md);
+}
+
+.nutrition-header {
+    padding: var(--spacing-md);
+    border-bottom: 2px solid var(--border-gold);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nutrition-body {
+    padding: var(--spacing-md);
+}
+
+.nutrition-section {
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--border-gold);
+}
+
+.nutrition-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-xs) 0;
+}
+
+.nutrition-row.sub {
+    padding-left: var(--spacing-lg);
+    font-size: var(--font-size-sm);
+}

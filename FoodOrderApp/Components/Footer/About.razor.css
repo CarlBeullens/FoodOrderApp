@@ -1,32 +1,37 @@
-﻿.why-choose-us {
-    padding: var(--spacing-xl) 0;
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
 }
 
-.section-title {
-    text-align: center;
+.story {
+    font-size: var(--font-size-lg);
+    line-height: 1.6;
     margin-bottom: var(--spacing-xl);
     color: var(--text-secondary);
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
-.feature-card-grid {
+.values-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-lg);
     margin: var(--spacing-xl) 0;
 }
 
-.feature-card {
+.value-item {
     background: var(--bg-card);
     padding: var(--spacing-lg);
     border-radius: var(--radius-md);
     border: 1px solid var(--border-gold);
 }
 
-.feature-card h4 {
+.value-item h3 {
     color: var(--text-accent);
     margin-bottom: var(--spacing-sm);
-} 
+}
+
+.contact {
+    font-size: var(--font-size-md);
+    line-height: 1.8;
+    color: var(--text-secondary);
+}

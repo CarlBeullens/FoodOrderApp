@@ -1,11 +1,11 @@
 ﻿@using FoodOrderApp.Models
-@using FoodOrderApp.Services
 @using FoodOrderApp.Services.CartService
+@using FoodOrderApp.Components.NutritionDialog
 @inject ICartService CartService
 
 <div class="col-md-4">
     <div class="card h-100">
-        <img src="@Item.ImageUrl" class="card-img" alt="@Item.Name" />
+        <img src="@Item.ImageUrl" class="card-img" alt="@Item.Name" @onclick="ShowNutritionDialog" />
         <div class="card-body">
             <h5 class="card-title">@Item.Name</h5>
             <p class="card-text">@Item.Description</p>
@@ -19,12 +19,23 @@
     </div>
 </div>
 
+<NutritionDialog 
+    @bind-Show="showNutritionDialog"
+    ItemName="@Item.Name"
+    Info="@Item.NutritionalInfo">
+</NutritionDialog>
+
 @code {
-    [Parameter]
-    public required Models.MenuItem Item { get; set; }
+    [Parameter] public required MenuItem Item { get; set; }
+    private bool showNutritionDialog = false;
 
     private void AddItemToCart()
     {
         CartService.AddToCart(Item);
+    }
+
+    private void ShowNutritionDialog()
+    {
+        showNutritionDialog = true;
     }
 }

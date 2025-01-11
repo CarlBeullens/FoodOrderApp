@@ -1,0 +1,30 @@
+@page "/order-confirmation"
+@page "/order-confirmation/{sessionId}"
+@using FoodOrderApp.Services.CartService
+@inject ICartService CartService
+
+<div class="success-container">
+    <div class="success-card">
+        <div class="success-header">
+            <h1>Thank You!</h1>
+        </div>
+
+        <div class="order-details">
+            <p class="confirmation-text">Your order has been confirmed</p>
+        </div>
+
+        <a href="/menu-display" class="btn btn-header">
+            Place Another Order
+        </a>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? SessionId { get; set; }
+
+    protected override void OnInitialized()
+    {
+        CartService.ClearCart();
+    }
+}

@@ -1,7 +1,7 @@
 ﻿using FoodOrderApp.Enum;
 using FoodOrderApp.Models;
 
-namespace FoodOrderApp.Services
+namespace FoodOrderApp.Services.MenuService
 {
     public interface IMenuService
     {

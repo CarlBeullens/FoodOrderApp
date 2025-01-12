@@ -12,7 +12,7 @@ A modern full-stack web application built with Blazor Server .NET 8, demonstrati
 
 ## 🛠️ Technology Stack
 
-* **Frontend**: Blazor Server, Bootstrap 5
+* **Frontend**: Blazor Server, Bootstrap 5, Custom CSS
 * **Backend**: .NET 8
 * **ORM**: Entity Framework Core
 * **Database**: SQL Server
@@ -53,7 +53,7 @@ The project uses Docker for the database. Here's the configuration:
 
 ```yaml
     container_name: FoodOrderApp.db
-    platform: linux/amd64 #Added to work on Mac M1
+    platform: linux/amd64
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       - ACCEPT_EULA=Y

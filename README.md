@@ -1,6 +1,6 @@
 # Blazor Server Food Order App
 
-![Build Status](https://github.com/CarlBeullens/FoodOrderApp/actions/ci.yml/badge.svg)
+![Build Status](https://github.com/CarlBeullens/FoodOrderApp/actions/workflows/ci.yml/badge.svg)
 
 A modern full-stack web application built with Blazor Server .NET 8, demonstrating clean architecture and modern development practices.
 

@@ -15,7 +15,6 @@ namespace FoodOrderApp.Data
             await dbContext.MenuItems.AddRangeAsync(
                 new MenuItem
                 {
-                    Id = 1,
                     Name = "Cheeseburger",
                     Description = "Classic beef burger with cheese",
                     Price = 9.99m,
@@ -26,7 +25,6 @@ namespace FoodOrderApp.Data
                 },
                 new MenuItem
                 {
-                    Id = 2,
                     Name = "French Fries",
                     Description = "Crispy golden fries",
                     Price = 4.99m,
@@ -37,7 +35,6 @@ namespace FoodOrderApp.Data
                 },
                 new MenuItem
                 {
-                    Id = 3,
                     Name = "Chocolate Shake",
                     Description = "Rich and creamy shake",
                     Price = 5.99m,
@@ -48,7 +45,6 @@ namespace FoodOrderApp.Data
                 },
                 new MenuItem
                 {
-                    Id = 4,
                     Name = "Double Bacon Burger",
                     Description = "Double patty with crispy bacon and special sauce",
                     Price = 12.99m,
@@ -59,7 +55,6 @@ namespace FoodOrderApp.Data
                 },
                 new MenuItem
                 {
-                    Id = 5,
                     Name = "Mushroom Swiss Burger",
                     Description = "Plant-based patty with grilled mushrooms and Swiss cheese",
                     Price = 10.99m,
@@ -70,7 +65,6 @@ namespace FoodOrderApp.Data
                 },
                 new MenuItem
                 {
-                    Id = 6,
                     Name = "Onion Rings",
                     Description = "Beer-battered crispy onion rings",
                     Price = 5.99m,
@@ -81,7 +75,6 @@ namespace FoodOrderApp.Data
                 },
                 new MenuItem
                 {
-                    Id = 7,
                     Name = "Apple Pie",
                     Description = "Warm apple pie with vanilla ice cream",
                     Price = 6.99m,
@@ -92,7 +85,6 @@ namespace FoodOrderApp.Data
                 },
                 new MenuItem
                 {
-                    Id = 8,
                     Name = "Chocolate Brownie",
                     Description = "Rich chocolate brownie with whipped cream",
                     Price = 5.99m,
@@ -103,7 +95,6 @@ namespace FoodOrderApp.Data
                 },
                 new MenuItem
                 {
-                    Id = 9,
                     Name = "Lemonade",
                     Description = "Fresh squeezed lemonade with mint",
                     Price = 3.99m,
@@ -114,7 +105,6 @@ namespace FoodOrderApp.Data
                 },
                 new MenuItem
                 {
-                    Id = 10,
                     Name = "Veggie Wrap",
                     Description = "Fresh vegetables with hummus in a whole wheat wrap",
                     Price = 8.99m,
@@ -125,7 +115,6 @@ namespace FoodOrderApp.Data
                 },
                 new MenuItem
                 {
-                    Id = 11,
                     Name = "Blazing Combo Deal",
                     Description = "Treat yourself to our signature Blazing Combo, " +
                                 "featuring a juicy beef patty topped with melted cheese and our secret spicy sauce. " +

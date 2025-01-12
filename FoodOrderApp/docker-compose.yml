@@ -1,15 +1,38 @@
+name: FoodOrderApp
 services:
-  db:
-    container_name: db
-    image: postgres:latest
+  app:
+    container_name: FoodOrderApp.BlazorServer
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=FoodOrder
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=db;Database=FoodOrderDb;User Id=sa;Password=Strong@Password123;TrustServerCertificate=True
     ports:
-      - "5432:5432"
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - FoodOrderApp.network
+  
+  db:
+    container_name: FoodOrderApp.db
+    platform: linux/amd64 #Added to work on Mac M1
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Strong@Password123
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - FoodOrderApp.network
+        
+networks:
+  FoodOrderApp.network:
+    driver: bridge
 
 volumes:
-  postgres_data:
+    sqlserver_data:

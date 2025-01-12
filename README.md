@@ -76,6 +76,11 @@ This project implements a comprehensive GitHub Actions workflow that:
 
 You can view the workflow in `.github/workflows/ci.yml`
 
+## 📸 Screenshots
+<div>
+  <img src="https://github.com/user-attachments/assets/696a05fa-cf7a-471c-8517-51ed8af6346e" width="500" alt="App Screenshot">
+</div>
+
 ## 💻 Development Features
 
 * **Entity Framework Migrations**: Database schema is version controlled
@@ -93,3 +98,4 @@ You can view the workflow in `.github/workflows/ci.yml`
 ## 👤 Contact
 
 Carl Beullens - [My LinkedIn](https://www.linkedin.com/in/carl-beullens)
+

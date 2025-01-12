@@ -92,4 +92,4 @@ You can view the workflow in `.github/workflows/ci.yml`
 
 ## 👤 Contact
 
-Carl Beullens - [My LinkedIn](linkedin.com/carlbeullens)
+Carl Beullens - [My LinkedIn](https://www.linkedin.com/in/carl-beullens)

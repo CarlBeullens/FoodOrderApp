@@ -80,7 +80,11 @@ You can view the workflow in `.github/workflows/ci.yml`
 
 ## 📸 Screenshots
 <div>
-  <img src="https://github.com/user-attachments/assets/696a05fa-cf7a-471c-8517-51ed8af6346e" width="500" alt="App Screenshot">
+  <img src="https://github.com/user-attachments/assets/68c116e7-2ece-4f5a-9ac7-75d967c36954" width="500" alt="Main">
+  <img src="https://github.com/user-attachments/assets/6dab11bb-93d8-4da7-9985-2931b62301da" width="500" alt="Nutrition Details">
+  <img src="https://github.com/user-attachments/assets/7288632b-de7f-4a79-ab46-4391f6d3c465" width="500" alt="Menu Management">
+  <img src="https://github.com/user-attachments/assets/e4a64a9a-bf31-46bb-a5f0-bcc345ed1090" width="500" alt="Combo Deal Dialog">
+  <img src="https://github.com/user-attachments/assets/b3523c42-5bc6-47a7-81b6-185f8d37367b" width="500" alt="Contact Form">
 </div>
 
 ## 💻 Development Features

@@ -5,18 +5,14 @@ using Stripe.Checkout;
 
 namespace FoodOrderApp.Services.CheckoutService;
 
-public class CheckOutService : ICheckoutService
+public class CheckOutService(IConfiguration configuration) : ICheckoutService
 {
-    public CheckOutService(IConfiguration configuration)
-    {
-        var apiKey = configuration["Stripe:SecretKey"] ?? throw new InvalidOperationException("Stripe:SecretKey not found in configuration");
-        StripeConfiguration.ApiKey = apiKey;
-    }
-    
     public CheckOutState State { get; set; } = new();
 
     public async Task<string> CreateCheckoutSession(List<CartItem> cartItems, CartCalculation calculation, string successUrl, string cancelUrl)
     {
+        InitializeStripe();
+        
         var lineItems = new List<SessionLineItemOptions>();
 
         // Add all cart items
@@ -83,5 +79,18 @@ public class CheckOutService : ICheckoutService
         var session = await service.CreateAsync(options);
 
         return session.Url;
+    }
+    
+    private void InitializeStripe()
+    {
+        var apiKey = GetStripeApiKey(configuration);
+        StripeConfiguration.ApiKey = apiKey;
+    }
+    
+    private static string GetStripeApiKey(IConfiguration configuration)
+    {
+        var encodedKey = configuration["Stripe:DecodedSecretKey"] ?? throw new InvalidOperationException("Stripe:DecodedSecretKey not found in configuration");
+        byte[] data = Convert.FromBase64String(encodedKey);
+        return System.Text.Encoding.UTF8.GetString(data);
     }
 }

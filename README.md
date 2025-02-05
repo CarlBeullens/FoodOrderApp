@@ -84,6 +84,8 @@ You can view the workflow in `.github/workflows/ci.yml`
   <img src="https://github.com/user-attachments/assets/6dab11bb-93d8-4da7-9985-2931b62301da" width="500" alt="Nutrition Details">
   <img src="https://github.com/user-attachments/assets/7288632b-de7f-4a79-ab46-4391f6d3c465" width="500" alt="Menu Management">
   <img src="https://github.com/user-attachments/assets/e4a64a9a-bf31-46bb-a5f0-bcc345ed1090" width="500" alt="Combo Deal Dialog">
+  <img src="https://github.com/user-attachments/assets/01c5a3ed-6b06-4732-8899-ea8ee5df46f5" width="500" alt="Cart">
+  <img src="https://github.com/user-attachments/assets/e4ea20f8-32bb-4598-a2a8-08d15f30df20" width="500" alt="Payment">
   <img src="https://github.com/user-attachments/assets/b3523c42-5bc6-47a7-81b6-185f8d37367b" width="500" alt="Contact Form">
 </div>
 

@@ -1,4 +1,4 @@
-# Blazor Server Food Order App
+# Blazing Burgers
 
 ![Build Status](https://github.com/CarlBeullens/FoodOrderApp/actions/workflows/ci.yml/badge.svg)
 

@@ -1,39 +1,42 @@
-name: .NET CI/CD
+name: .NET Build and Test
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: Strong@Password123
+          MSSQL_PID: Express
+        ports:
+          - "1433:1433"
+        options: >-
+          --name=FoodOrderApp.db
+          --platform=linux/amd64
+
     steps:
-    - uses: actions/checkout@v3
+        - name: Checkout code
+          uses: actions/checkout@v3
     
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.x'
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v3
+          with:
+            dotnet-version: '8.0.x'
     
-    - name: Restore dependencies
-      run: dotnet restore
+        - name: Restore dependencies
+          run: dotnet restore
     
-    - name: Build
-      run: dotnet build --no-restore --configuration Release
+        - name: Build
+          run: dotnet build --configuration Release --no-restore
     
-    - name: Test
-      run: dotnet test --no-build --verbosity normal --configuration Release
-    
-    - name: Start SQL Server
-      run: |
-        docker-compose up -d
-        sleep 10  # Give SQL Server time to start
-    
-    - name: Integration Tests
-      run: dotnet test --no-build --verbosity normal --configuration Release
-      
-    - name: Build Docker Image
-      run: docker build -t your-app-name .
+        - name: Run tests
+          run: dotnet test --no-restore --verbosity normal
+          

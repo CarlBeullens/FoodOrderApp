@@ -47,7 +47,7 @@ docker-compose up -d
 dotnet run
 ```
 
-4. Access the application at `https://localhost:5233`
+4. Access the application at `http://localhost:5233`
 
 ## 🐋 Docker Configuration
 

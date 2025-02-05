@@ -4,10 +4,9 @@ EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["FoodOrderApp/FoodOrderApp.csproj", "FoodOrderApp/"]
-RUN dotnet restore "FoodOrderApp/FoodOrderApp.csproj"
+COPY ["FoodOrderApp.csproj", "./"]
+RUN dotnet restore "FoodOrderApp.csproj"
 COPY . .
-WORKDIR "/src/FoodOrderApp"
 # Force Razor compilation and CSS generation
 RUN dotnet build "FoodOrderApp.csproj" -c Release -o /app/build /p:UseRazorSourceGenerator=true
 
